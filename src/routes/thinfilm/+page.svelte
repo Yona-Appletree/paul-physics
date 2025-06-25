@@ -70,6 +70,12 @@
 		substrateReflectedStartX + Math.tan(refractedAngleRad) * filmThickness
 	);
 	const substrateReflectedEndY = $derived(filmTop);
+
+	// Calculate final transmission into air
+	const finalTransmissionStartX = $derived(substrateReflectedEndX);
+	const finalTransmissionStartY = $derived(filmTop);
+	const finalTransmissionEndX = $derived(finalTransmissionStartX + Math.tan(angleRad) * beamLength);
+	const finalTransmissionEndY = $derived(finalTransmissionStartY - beamLength);
 </script>
 
 <svelte:head>
@@ -204,6 +210,20 @@
 				stroke-width="2"
 				marker-end="url(#arrowhead-purple)"
 			/>
+
+			<!-- Final transmission into air -->
+			<line
+				x1={finalTransmissionStartX}
+				y1={finalTransmissionStartY}
+				x2={finalTransmissionEndX}
+				y2={finalTransmissionEndY}
+				stroke="#0066CC"
+				stroke-width="2"
+				marker-end="url(#arrowhead-blue)"
+			/>
+			<text x={finalTransmissionEndX + 20} y={finalTransmissionEndY + 10} class="beam-label"
+				>Transmitted</text
+			>
 
 			<!-- Arrow markers -->
 			<defs>
