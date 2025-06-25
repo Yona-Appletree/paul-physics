@@ -43,13 +43,13 @@
 	const filmN = $derived(filmMaterials[selectedFilmIndex].n);
 
 	// Calculate incident beam path
-	const incidentEndX = $derived(centerX - Math.tan(angleRad) * (filmTop - beamStartY));
+	const incidentEndX = $derived(centerX + Math.tan(angleRad) * (filmTop - beamStartY));
 	const incidentEndY = $derived(filmTop);
 
 	// Calculate reflection angle (same as incident for air-film interface)
 	const reflectedStartX = $derived(incidentEndX);
 	const reflectedStartY = $derived(filmTop);
-	const reflectedEndX = $derived(reflectedStartX - Math.tan(angleRad) * beamLength);
+	const reflectedEndX = $derived(reflectedStartX + Math.tan(angleRad) * beamLength);
 	const reflectedEndY = $derived(reflectedStartY - beamLength);
 
 	// Calculate refracted angle in film using Snell's law
@@ -67,24 +67,9 @@
 	const substrateReflectedStartX = $derived(refractedEndX);
 	const substrateReflectedStartY = $derived(substrateBottom);
 	const substrateReflectedEndX = $derived(
-		substrateReflectedStartX - Math.tan(refractedAngleRad) * filmThickness
+		substrateReflectedStartX + Math.tan(refractedAngleRad) * filmThickness
 	);
 	const substrateReflectedEndY = $derived(filmTop);
-
-	// Calculate final transmitted beam from film
-	const finalTransmittedStartX = $derived(substrateReflectedEndX);
-	const finalTransmittedStartY = $derived(filmTop);
-	const finalTransmittedEndX = $derived(finalTransmittedStartX - Math.tan(angleRad) * beamLength);
-	const finalTransmittedEndY = $derived(finalTransmittedStartY - beamLength);
-
-	// Calculate transmitted beam into substrate
-	const transmittedAngleRad = $derived(
-		Math.asin((filmN * Math.sin(refractedAngleRad)) / substrateN)
-	);
-	const transmittedStartX = $derived(refractedEndX);
-	const transmittedStartY = $derived(substrateTop);
-	const transmittedEndX = $derived(transmittedStartX + Math.tan(transmittedAngleRad) * beamLength);
-	const transmittedEndY = $derived(transmittedStartY + beamLength);
 </script>
 
 <svelte:head>
@@ -207,42 +192,6 @@
 				stroke="#00AA00"
 				stroke-width="2"
 				marker-end="url(#arrowhead-green)"
-			/>
-
-			<!-- Reflected beam from substrate -->
-			<line
-				x1={substrateReflectedStartX}
-				y1={substrateReflectedStartY}
-				x2={substrateReflectedEndX}
-				y2={substrateReflectedEndY}
-				stroke="#00AA00"
-				stroke-width="2"
-				marker-end="url(#arrowhead-green)"
-			/>
-
-			<!-- Final transmitted beam -->
-			<line
-				x1={finalTransmittedStartX}
-				y1={finalTransmittedStartY}
-				x2={finalTransmittedEndX}
-				y2={finalTransmittedEndY}
-				stroke="#0066CC"
-				stroke-width="2"
-				marker-end="url(#arrowhead-blue)"
-			/>
-			<text x={finalTransmittedEndX - 80} y={finalTransmittedEndY + 20} class="beam-label"
-				>Transmitted</text
-			>
-
-			<!-- Transmitted beam into substrate -->
-			<line
-				x1={transmittedStartX}
-				y1={transmittedStartY}
-				x2={transmittedEndX}
-				y2={transmittedEndY}
-				stroke="#6600CC"
-				stroke-width="2"
-				marker-end="url(#arrowhead-purple)"
 			/>
 
 			<!-- Arrow markers -->
