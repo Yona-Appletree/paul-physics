@@ -5,6 +5,8 @@
 	// for introductory-level physics classes
 	//
 
+	import LightBeam from './LightBeam.svelte';
+
 	// Non-adjustable parameters
 	const wavelengthNm = 500;
 	const airN = 1;
@@ -132,6 +134,60 @@
 
 	<div class="svg-container">
 		<svg width="100%" height="100%" viewBox="0 0 {svgWidth} {svgHeight}" class="simulation-svg">
+			<!-- Arrow markers -->
+			<defs>
+				<marker
+					id="arrowhead-red"
+					markerWidth="10"
+					markerHeight="7"
+					refX="9"
+					refY="3.5"
+					orient="auto"
+				>
+					<polygon points="0 0, 10 3.5, 0 7" fill="#FF0000" />
+				</marker>
+				<marker
+					id="arrowhead-pink"
+					markerWidth="10"
+					markerHeight="7"
+					refX="9"
+					refY="3.5"
+					orient="auto"
+				>
+					<polygon points="0 0, 10 3.5, 0 7" fill="#FF6B6B" />
+				</marker>
+				<marker
+					id="arrowhead-green"
+					markerWidth="10"
+					markerHeight="7"
+					refX="9"
+					refY="3.5"
+					orient="auto"
+				>
+					<polygon points="0 0, 10 3.5, 0 7" fill="#00AA00" />
+				</marker>
+				<marker
+					id="arrowhead-purple"
+					markerWidth="10"
+					markerHeight="7"
+					refX="9"
+					refY="3.5"
+					orient="auto"
+				>
+					<polygon points="0 0, 10 3.5, 0 7" fill="#6600CC" />
+				</marker>
+				<marker
+					id="arrowhead-blue"
+					markerWidth="10"
+					markerHeight="7"
+					refX="9"
+					refY="3.5"
+					orient="auto"
+				>
+					<polygon points="0 0, 10 3.5, 0 7" fill="#0066CC" />
+				</marker>
+			</defs>
+
 			<!-- Background -->
 			<rect width="100%" height="100%" fill="#f8f9fa" />
 
@@ -166,119 +222,57 @@
 				Glass Substrate (n = {substrateN})
 			</text>
 
-			<!-- Incident beam -->
-			<line
+			<!-- Light beams -->
+			<LightBeam
 				x1={centerX}
 				y1={beamStartY}
 				x2={incidentEndX}
 				y2={incidentEndY}
-				stroke="#FF0000"
-				stroke-width="3"
-				marker-end="url(#arrowhead-red)"
+				color="#FF0000"
+				arrowId="arrowhead-red"
+				label="Incident"
+				labelOffset={{ x: -80, y: 20 }}
 			/>
-			<text x={centerX - 80} y={beamStartY + 20} class="beam-label">Incident</text>
 
-			<!-- Reflected beam -->
-			<line
+			<LightBeam
 				x1={reflectedStartX}
 				y1={reflectedStartY}
 				x2={reflectedEndX}
 				y2={reflectedEndY}
-				stroke="#FF6B6B"
-				stroke-width="2"
-				marker-end="url(#arrowhead-pink)"
+				color="#FF6B6B"
+				arrowId="arrowhead-pink"
+				label="Reflected"
+				labelOffset={{ x: -60, y: 20 }}
 			/>
-			<text x={reflectedEndX - 60} y={reflectedEndY + 20} class="beam-label">Reflected</text>
 
-			<!-- Refracted beam in film -->
-			<line
+			<LightBeam
 				x1={refractedStartX}
 				y1={refractedStartY}
 				x2={refractedEndX}
 				y2={refractedEndY}
-				stroke="#00AA00"
-				stroke-width="2"
-				marker-end="url(#arrowhead-green)"
+				color="#00AA00"
+				arrowId="arrowhead-green"
 			/>
 
-			<!-- Substrate reflection within film -->
-			<line
+			<LightBeam
 				x1={substrateReflectedStartX}
 				y1={substrateReflectedStartY}
 				x2={substrateReflectedEndX}
 				y2={substrateReflectedEndY}
-				stroke="#6600CC"
-				stroke-width="2"
-				marker-end="url(#arrowhead-purple)"
+				color="#6600CC"
+				arrowId="arrowhead-purple"
 			/>
 
-			<!-- Final transmission into air -->
-			<line
+			<LightBeam
 				x1={finalTransmissionStartX}
 				y1={finalTransmissionStartY}
 				x2={finalTransmissionEndX}
 				y2={finalTransmissionEndY}
-				stroke="#0066CC"
-				stroke-width="2"
-				marker-end="url(#arrowhead-blue)"
+				color="#0066CC"
+				arrowId="arrowhead-blue"
+				label="Transmitted"
+				labelOffset={{ x: 20, y: 10 }}
 			/>
-			<text x={finalTransmissionEndX + 20} y={finalTransmissionEndY + 10} class="beam-label"
-				>Transmitted</text
-			>
-
-			<!-- Arrow markers -->
-			<defs>
-				<marker
-					id="arrowhead-red"
-					markerWidth="10"
-					markerHeight="7"
-					refX="9"
-					refY="3.5"
-					orient="auto"
-				>
-					<polygon points="0 0, 10 3.5, 0 7" fill="#FF0000" />
-				</marker>
-				<marker
-					id="arrowhead-pink"
-					markerWidth="10"
-					markerHeight="7"
-					refX="9"
-					refY="3.5"
-					orient="auto"
-				>
-					<polygon points="0 0, 10 3.5, 0 7" fill="#FF6B6B" />
-				</marker>
-				<marker
-					id="arrowhead-green"
-					markerWidth="10"
-					markerHeight="7"
-					refX="9"
-					refY="3.5"
-					orient="auto"
-				>
-					<polygon points="0 0, 10 3.5, 0 7" fill="#00AA00" />
-				</marker>
-				<marker
-					id="arrowhead-blue"
-					markerWidth="10"
-					markerHeight="7"
-					refX="9"
-					refY="3.5"
-					orient="auto"
-				>
-					<polygon points="0 0, 10 3.5, 0 7" fill="#0066CC" />
-				</marker>
-				<marker
-					id="arrowhead-purple"
-					markerWidth="10"
-					markerHeight="7"
-					refX="9"
-					refY="3.5"
-					orient="auto"
-				>
-					<polygon points="0 0, 10 3.5, 0 7" fill="#6600CC" />
-				</marker>
-			</defs>
 		</svg>
 	</div>
 
