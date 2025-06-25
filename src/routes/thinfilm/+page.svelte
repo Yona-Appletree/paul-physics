@@ -139,7 +139,7 @@
 	);
 
 	// Final transmission should match the phase of substrate reflection at the interface
-	const finalTransmissionPhaseShift = $derived(filmN < substrateN ? Math.PI : 0);
+	const finalTransmissionPhaseShift = $derived(substrateReflectionPhaseAtEnd);
 </script>
 
 <svelte:head>
@@ -353,8 +353,8 @@
 				{wavelengthNm}
 				refractiveIndex={filmN}
 				{nmToPixels}
-				waveStart="start"
-				phaseShift={substrateReflectionPhaseShift}
+				waveStart="end"
+				phaseShift={finalTransmissionPhaseShift}
 			/>
 
 			<!-- transmitted beam -->
@@ -371,7 +371,7 @@
 				refractiveIndex={airN}
 				{nmToPixels}
 				waveStart="start"
-				phaseShift={finalTransmissionPhaseShift}
+				phaseShift={finalTransmissionPhaseShift * -1}
 			/>
 		</svg>
 	</div>
