@@ -11,7 +11,8 @@
 		showWave = true,
 		wavelengthNm = 500,
 		refractiveIndex = 1, // default to air's refractive index
-		nmToPixels = 0.3 // scale factor to convert nm to pixels
+		nmToPixels = 0.3, // scale factor to convert nm to pixels
+		waveStart = 'start' // 'start' or 'end' - determines where the wave's phase starts from
 	} = $props();
 
 	// Sine wave parameters
@@ -33,11 +34,14 @@
 
 		for (let i = 0; i <= numPoints; i++) {
 			const t = i / numPoints;
+			const tPhase = waveStart === 'end' ? 1 - t : t;
+
+			// Calculate position along the line
 			const x = x1 + (x2 - x1) * t;
 			const y = y1 + (y2 - y1) * t;
 
 			// Calculate perpendicular offset for sine wave
-			const waveOffset = Math.sin((t * length * 2 * Math.PI) / wavelengthPx) * amplitude;
+			const waveOffset = Math.sin((tPhase * length * 2 * Math.PI) / wavelengthPx) * amplitude;
 			const perpX = -Math.sin(angle) * waveOffset;
 			const perpY = Math.cos(angle) * waveOffset;
 

@@ -16,7 +16,7 @@
 	const nmToPixels = 0.3; // This was the factor we were using for film thickness
 
 	// User adjustable parameters
-	let filmThicknessNm = $state(100);
+	let filmThicknessNm = $state(300);
 	const filmThicknessRange = { min: 10, max: 700 };
 
 	const filmMaterials = [
@@ -226,6 +226,8 @@
 			</text>
 
 			<!-- Light beams -->
+
+			<!-- incident beam -->
 			<LightBeam
 				x1={centerX}
 				y1={beamStartY}
@@ -238,8 +240,10 @@
 				{wavelengthNm}
 				refractiveIndex={airN}
 				{nmToPixels}
+				waveStart="start"
 			/>
 
+			<!-- reflected beam -->
 			<LightBeam
 				x1={reflectedStartX}
 				y1={reflectedStartY}
@@ -252,8 +256,10 @@
 				{wavelengthNm}
 				refractiveIndex={airN}
 				{nmToPixels}
+				waveStart="start"
 			/>
 
+			<!-- refracted beam -->
 			<LightBeam
 				x1={refractedStartX}
 				y1={refractedStartY}
@@ -264,8 +270,10 @@
 				{wavelengthNm}
 				refractiveIndex={filmN}
 				{nmToPixels}
+				waveStart="start"
 			/>
 
+			<!-- substrate reflected beam -->
 			<LightBeam
 				x1={substrateReflectedStartX}
 				y1={substrateReflectedStartY}
@@ -276,8 +284,10 @@
 				{wavelengthNm}
 				refractiveIndex={filmN}
 				{nmToPixels}
+				waveStart="end"
 			/>
 
+			<!-- transmitted beam -->
 			<LightBeam
 				x1={finalTransmissionStartX}
 				y1={finalTransmissionStartY}
@@ -290,6 +300,7 @@
 				{wavelengthNm}
 				refractiveIndex={airN}
 				{nmToPixels}
+				waveStart="end"
 			/>
 		</svg>
 	</div>
