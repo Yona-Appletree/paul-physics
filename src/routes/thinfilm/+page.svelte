@@ -11,18 +11,31 @@
 	const substrateN = 1.5; // index of refraction
 
 	// User adjustable parameters
-	const filmChoices = [
-		{
-			label: 'MgF2',
-			n: 1.38
-		},
-		{
-			label: 'SiO2',
-			n: 1.65
-		}
-	];
-	const filmChoiceIndex = 0;
-	const angleDegrees = 15; // angle from vertical
+	const filmThicknessNm = {
+		min: 10,
+		max: 700,
+		current: 100
+	};
+
+	const film = {
+		choices: [
+			{
+				label: 'MgF2',
+				n: 1.38
+			},
+			{
+				label: 'SiO2',
+				n: 1.65
+			}
+		],
+		currentIndex: 0
+	};
+
+	const angleDegrees = {
+		min: 0,
+		max: 30,
+		current: 15 // angle from vertical
+	};
 </script>
 
 <svelte:head>
