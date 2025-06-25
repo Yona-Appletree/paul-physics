@@ -124,7 +124,7 @@
 	// 2. Add π if reflecting from higher index material
 	// 3. Negate the phase because we're starting from the end point
 	const substrateReflectionPhaseShift = $derived(
-		-refractedPhaseAtEnd + (filmN < substrateN ? Math.PI : 0)
+		-refractedPhaseAtEnd + (filmN > substrateN ? Math.PI : 0)
 	);
 
 	// Calculate phase accumulated by substrate reflection at film-air interface
@@ -321,7 +321,7 @@
 				color="#FF6B6B"
 				arrowId="arrowhead-pink"
 				label="Reflected"
-				labelOffset={{ x: -60, y: 20 }}
+				labelOffset={{ x: -70, y: 10 }}
 				{wavelengthNm}
 				refractiveIndex={airN}
 				{nmToPixels}
