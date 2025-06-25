@@ -10,7 +10,8 @@
 		labelOffset = { x: 20, y: 10 },
 		showWave = true,
 		wavelengthNm = 500,
-		refractiveIndex = 1 // default to air's refractive index
+		refractiveIndex = 1, // default to air's refractive index
+		nmToPixels = 0.3 // scale factor to convert nm to pixels
 	} = $props();
 
 	// Sine wave parameters
@@ -19,9 +20,6 @@
 	// Calculate the angle and length for the sine wave
 	const angle = $derived(Math.atan2(y2 - y1, x2 - x1));
 	const length = $derived(Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2));
-
-	// Scale factor to convert nm to pixels (adjust this to make waves more visible)
-	const nmToPixels = 0.2;
 
 	// Calculate wavelength in pixels, accounting for refractive index
 	const wavelengthPx = $derived((wavelengthNm / refractiveIndex) * nmToPixels);

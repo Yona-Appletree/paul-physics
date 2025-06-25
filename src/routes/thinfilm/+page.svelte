@@ -12,6 +12,9 @@
 	const airN = 1;
 	const substrateN = 1.5; // index of refraction
 
+	// Scale factor to convert nanometers to pixels
+	const nmToPixels = 0.3; // This was the factor we were using for film thickness
+
 	// User adjustable parameters
 	let filmThicknessNm = $state(100);
 	const filmThicknessRange = { min: 10, max: 700 };
@@ -33,7 +36,7 @@
 
 	// Layer positions and dimensions
 	const filmTop = 200;
-	const filmBottom = $derived(filmTop + filmThicknessNm * 0.3);
+	const filmBottom = $derived(filmTop + filmThicknessNm * nmToPixels);
 	const substrateTop = $derived(filmBottom);
 	const substrateBottom = 400;
 
@@ -234,6 +237,7 @@
 				labelOffset={{ x: -80, y: 20 }}
 				{wavelengthNm}
 				refractiveIndex={airN}
+				{nmToPixels}
 			/>
 
 			<LightBeam
@@ -247,6 +251,7 @@
 				labelOffset={{ x: -60, y: 20 }}
 				{wavelengthNm}
 				refractiveIndex={airN}
+				{nmToPixels}
 			/>
 
 			<LightBeam
@@ -258,6 +263,7 @@
 				arrowId="arrowhead-green"
 				{wavelengthNm}
 				refractiveIndex={filmN}
+				{nmToPixels}
 			/>
 
 			<LightBeam
@@ -269,6 +275,7 @@
 				arrowId="arrowhead-purple"
 				{wavelengthNm}
 				refractiveIndex={filmN}
+				{nmToPixels}
 			/>
 
 			<LightBeam
@@ -282,6 +289,7 @@
 				labelOffset={{ x: 20, y: 10 }}
 				{wavelengthNm}
 				refractiveIndex={airN}
+				{nmToPixels}
 			/>
 		</svg>
 	</div>
