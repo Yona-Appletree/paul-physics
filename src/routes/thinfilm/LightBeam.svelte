@@ -12,11 +12,12 @@
 		wavelengthNm = 500,
 		refractiveIndex = 1, // default to air's refractive index
 		nmToPixels = 0.3, // scale factor to convert nm to pixels
-		waveStart = 'start' // 'start' or 'end' - determines where the wave's phase starts from
+		waveStart = 'start', // 'start' or 'end' - determines where the wave's phase starts from
+		phaseShift = 0 // phase shift in radians
 	} = $props();
 
 	// Sine wave parameters
-	const amplitude = 5; // Wave height in pixels
+	const amplitude = 10; // Wave height in pixels
 
 	// Calculate the angle and length for the sine wave
 	const angle = $derived(Math.atan2(y2 - y1, x2 - x1));
@@ -44,7 +45,9 @@
 			// Flip the phase by negating the sine when waveStart is 'end'
 			const phaseMultiplier = waveStart === 'end' ? -1 : 1;
 			const waveOffset =
-				phaseMultiplier * Math.sin((tPhase * length * 2 * Math.PI) / wavelengthPx) * amplitude;
+				phaseMultiplier *
+				Math.sin((tPhase * length * 2 * Math.PI) / wavelengthPx + phaseShift) *
+				amplitude;
 			const perpX = -Math.sin(angle) * waveOffset;
 			const perpY = Math.cos(angle) * waveOffset;
 

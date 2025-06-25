@@ -82,6 +82,40 @@
 	const finalTransmissionStartY = $derived(filmTop);
 	const finalTransmissionEndX = $derived(finalTransmissionStartX + Math.tan(angleRad) * beamLength);
 	const finalTransmissionEndY = $derived(finalTransmissionStartY - beamLength);
+
+	// Calculate wavelengths in pixels for each medium
+	const airWavelengthPx = $derived(wavelengthNm * nmToPixels);
+	const filmWavelengthPx = $derived((wavelengthNm / filmN) * nmToPixels);
+
+	// Calculate phase accumulated by refracted beam at substrate interface
+	const refractedPathLength = $derived(
+		Math.sqrt(
+			Math.pow(refractedEndX - refractedStartX, 2) + Math.pow(refractedEndY - refractedStartY, 2)
+		)
+	);
+	const refractedPhaseAtEnd = $derived((refractedPathLength * 2 * Math.PI) / filmWavelengthPx);
+
+	// Phase shift for substrate reflection:
+	// 1. Start with the phase from the refracted beam at the intersection
+	// 2. Add π if reflecting from higher index material
+	// 3. Negate the phase because we're starting from the end point
+	const substrateReflectionPhaseShift = $derived(
+		-refractedPhaseAtEnd + (filmN < substrateN ? Math.PI : 0)
+	);
+
+	// Calculate phase accumulated by substrate reflection at film-air interface
+	const substrateReflectionPathLength = $derived(
+		Math.sqrt(
+			Math.pow(substrateReflectedEndX - substrateReflectedStartX, 2) +
+				Math.pow(substrateReflectedEndY - substrateReflectedStartY, 2)
+		)
+	);
+	const substrateReflectionPhaseAtEnd = $derived(
+		substrateReflectionPhaseShift - (substrateReflectionPathLength * 2 * Math.PI) / filmWavelengthPx
+	);
+
+	// Final transmission should match the phase of substrate reflection at the interface
+	const finalTransmissionPhaseShift = $derived(filmN < substrateN ? Math.PI : 0);
 </script>
 
 <svelte:head>
@@ -285,6 +319,7 @@
 				refractiveIndex={filmN}
 				{nmToPixels}
 				waveStart="start"
+				phaseShift={substrateReflectionPhaseShift}
 			/>
 
 			<!-- transmitted beam -->
@@ -300,7 +335,8 @@
 				{wavelengthNm}
 				refractiveIndex={airN}
 				{nmToPixels}
-				waveStart="end"
+				waveStart="start"
+				phaseShift={finalTransmissionPhaseShift}
 			/>
 		</svg>
 	</div>
