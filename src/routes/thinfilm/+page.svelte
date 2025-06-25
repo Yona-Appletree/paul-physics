@@ -15,6 +15,7 @@
 	const filmThicknessRange = { min: 10, max: 700 };
 
 	const filmMaterials = [
+		{ label: 'Test', n: 3 },
 		{ label: 'MgF2', n: 1.38 },
 		{ label: 'SiO2', n: 1.65 }
 	];
@@ -30,8 +31,8 @@
 
 	// Layer positions and dimensions
 	const filmTop = 200;
-	const filmBottom = 250;
-	const substrateTop = filmBottom;
+	const filmBottom = $derived(filmTop + filmThicknessNm * 0.3);
+	const substrateTop = $derived(filmBottom);
 	const substrateBottom = 400;
 
 	// Beam parameters
