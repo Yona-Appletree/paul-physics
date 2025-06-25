@@ -41,7 +41,10 @@
 			const y = y1 + (y2 - y1) * t;
 
 			// Calculate perpendicular offset for sine wave
-			const waveOffset = Math.sin((tPhase * length * 2 * Math.PI) / wavelengthPx) * amplitude;
+			// Flip the phase by negating the sine when waveStart is 'end'
+			const phaseMultiplier = waveStart === 'end' ? -1 : 1;
+			const waveOffset =
+				phaseMultiplier * Math.sin((tPhase * length * 2 * Math.PI) / wavelengthPx) * amplitude;
 			const perpX = -Math.sin(angle) * waveOffset;
 			const perpY = Math.cos(angle) * waveOffset;
 
@@ -60,14 +63,14 @@
 		{x2}
 		{y2}
 		stroke={color}
-		stroke-width="2"
+		stroke-width="1"
 		marker-end="url(#{arrowId})"
 		opacity=".3"
 	/>
 
 	<!-- Sine wave overlay -->
 	{#if showWave}
-		<path d={wavePath} stroke={color} stroke-width="1" fill="none" opacity="1" />
+		<path d={wavePath} stroke={color} stroke-width="2" fill="none" opacity="1" />
 	{/if}
 
 	<!-- Label -->

@@ -240,7 +240,7 @@
 				{wavelengthNm}
 				refractiveIndex={airN}
 				{nmToPixels}
-				waveStart="start"
+				waveStart="end"
 			/>
 
 			<!-- reflected beam -->
@@ -284,7 +284,7 @@
 				{wavelengthNm}
 				refractiveIndex={filmN}
 				{nmToPixels}
-				waveStart="end"
+				waveStart="start"
 			/>
 
 			<!-- transmitted beam -->
