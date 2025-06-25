@@ -87,6 +87,30 @@
 	const airWavelengthPx = $derived(wavelengthNm * nmToPixels);
 	const filmWavelengthPx = $derived((wavelengthNm / filmN) * nmToPixels);
 
+	// Calculate coordinates for the perpendicular reference line
+	const referenceLineLength = 150; // Length of the reference line in pixels
+	// Calculate position relative to first reflection peak
+	const reflectionPeakX = $derived(
+		reflectedStartX + airWavelengthPx * 0.75 * Math.cos(angleRad - Math.PI / 2)
+	);
+	const reflectionPeakY = $derived(
+		reflectedStartY + airWavelengthPx * 0.75 * Math.sin(angleRad - Math.PI / 2)
+	);
+
+	const perpendicularAngle = $derived(angleRad + Math.PI); // Add 90 degrees for perpendicular
+	const referenceLineStartX = $derived(
+		reflectionPeakX - Math.cos(perpendicularAngle) * referenceLineLength
+	);
+	const referenceLineStartY = $derived(
+		reflectionPeakY - Math.sin(perpendicularAngle) * referenceLineLength
+	);
+	const referenceLineEndX = $derived(
+		reflectionPeakX + Math.cos(perpendicularAngle) * referenceLineLength
+	);
+	const referenceLineEndY = $derived(
+		reflectionPeakY + Math.sin(perpendicularAngle) * referenceLineLength
+	);
+
 	// Calculate phase accumulated by refracted beam at substrate interface
 	const refractedPathLength = $derived(
 		Math.sqrt(
@@ -258,6 +282,17 @@
 			<text x="50" y={substrateTop + 25} class="region-label">
 				Glass Substrate (n = {substrateN})
 			</text>
+
+			<!-- Reference line -->
+			<line
+				x1={referenceLineStartX}
+				y1={referenceLineStartY}
+				x2={referenceLineEndX}
+				y2={referenceLineEndY}
+				stroke="#888888"
+				stroke-width="2"
+				opacity="0.5"
+			/>
 
 			<!-- Light beams -->
 
