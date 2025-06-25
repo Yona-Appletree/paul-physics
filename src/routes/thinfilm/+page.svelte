@@ -65,7 +65,7 @@
 
 	// Calculate reflection from substrate
 	const substrateReflectedStartX = $derived(refractedEndX);
-	const substrateReflectedStartY = $derived(substrateBottom);
+	const substrateReflectedStartY = $derived(filmBottom);
 	const substrateReflectedEndX = $derived(
 		substrateReflectedStartX + Math.tan(refractedAngleRad) * filmThickness
 	);
@@ -192,6 +192,17 @@
 				stroke="#00AA00"
 				stroke-width="2"
 				marker-end="url(#arrowhead-green)"
+			/>
+
+			<!-- Substrate reflection within film -->
+			<line
+				x1={substrateReflectedStartX}
+				y1={substrateReflectedStartY}
+				x2={substrateReflectedEndX}
+				y2={substrateReflectedEndY}
+				stroke="#6600CC"
+				stroke-width="2"
+				marker-end="url(#arrowhead-purple)"
 			/>
 
 			<!-- Arrow markers -->
