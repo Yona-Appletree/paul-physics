@@ -20,7 +20,6 @@
 	const filmThicknessRange = { min: 10, max: 700 };
 
 	const filmMaterials = [
-		{ label: 'Test', n: 3 },
 		{ label: 'MgF2', n: 1.38 },
 		{ label: 'SiO2', n: 1.65 }
 	];
@@ -152,7 +151,7 @@
 </svelte:head>
 
 <div class="simulation-container">
-	<h1>Thin Film Physics Simulation</h1>
+	<h1>Thin Film Simulation</h1>
 
 	<div class="controls">
 		<div class="control-group">
