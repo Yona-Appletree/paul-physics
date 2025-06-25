@@ -8,16 +8,23 @@
 		arrowId,
 		label = '',
 		labelOffset = { x: 20, y: 10 },
-		showWave = true
+		showWave = true,
+		wavelengthNm = 500,
+		refractiveIndex = 1 // default to air's refractive index
 	} = $props();
 
 	// Sine wave parameters
-	const wavelengthPx = 20; // Pixels per wave
-	const amplitude = 2; // Wave height in pixels
+	const amplitude = 5; // Wave height in pixels
 
 	// Calculate the angle and length for the sine wave
 	const angle = $derived(Math.atan2(y2 - y1, x2 - x1));
 	const length = $derived(Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2));
+
+	// Scale factor to convert nm to pixels (adjust this to make waves more visible)
+	const nmToPixels = 0.2;
+
+	// Calculate wavelength in pixels, accounting for refractive index
+	const wavelengthPx = $derived((wavelengthNm / refractiveIndex) * nmToPixels);
 
 	// Generate sine wave path
 	const wavePath = $derived(generateWavePath());

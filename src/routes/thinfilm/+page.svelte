@@ -232,6 +232,8 @@
 				arrowId="arrowhead-red"
 				label="Incident"
 				labelOffset={{ x: -80, y: 20 }}
+				{wavelengthNm}
+				refractiveIndex={airN}
 			/>
 
 			<LightBeam
@@ -243,6 +245,8 @@
 				arrowId="arrowhead-pink"
 				label="Reflected"
 				labelOffset={{ x: -60, y: 20 }}
+				{wavelengthNm}
+				refractiveIndex={airN}
 			/>
 
 			<LightBeam
@@ -252,6 +256,8 @@
 				y2={refractedEndY}
 				color="#00AA00"
 				arrowId="arrowhead-green"
+				{wavelengthNm}
+				refractiveIndex={filmN}
 			/>
 
 			<LightBeam
@@ -261,6 +267,8 @@
 				y2={substrateReflectedEndY}
 				color="#6600CC"
 				arrowId="arrowhead-purple"
+				{wavelengthNm}
+				refractiveIndex={filmN}
 			/>
 
 			<LightBeam
@@ -272,6 +280,8 @@
 				arrowId="arrowhead-blue"
 				label="Transmitted"
 				labelOffset={{ x: 20, y: 10 }}
+				{wavelengthNm}
+				refractiveIndex={airN}
 			/>
 		</svg>
 	</div>
